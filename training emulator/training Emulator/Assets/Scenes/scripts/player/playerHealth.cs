@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// when enemy attacks only for that purpose
 public class playerHealth : MonoBehaviour
 {
     int playerhealth;
@@ -11,7 +13,6 @@ public class playerHealth : MonoBehaviour
         playerhealth = 100;  
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.H))

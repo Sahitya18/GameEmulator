@@ -5,7 +5,7 @@ using UnityEngine;
 public class gunSystem : MonoBehaviour
 {
     //Gun stats
-    public int damage;
+    int headDamage, bodyDamage, legDamage;
     public float timeBetweenShooting, spread, range, reloadTime, timeBetweenShots;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
@@ -33,26 +33,34 @@ public class gunSystem : MonoBehaviour
     }
     private void Update()
     {
-        MyInput();
+        myInput();
+        print(headDamage + " " + bodyDamage + " " + legDamage);
 
-        //SetText
-        //------text.SetText(bulletsLeft + " / " + magazineSize);
     }
-    private void MyInput()
+    private void myInput()
     {
-        if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        if (allowButtonHold)
+        {
+            shooting = Input.GetKey(KeyCode.Mouse0);
+        }
+        else
+        {
+            shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) 
+        { 
+            reload(); 
+        }
 
         //Shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
         {
             bulletsShot = bulletsPerTap;
-            Shoot();
+            shoot();
         }
     }
-    private void Shoot()
+    private void shoot()
     {
         readyToShoot = false;
 
@@ -68,24 +76,29 @@ public class gunSystem : MonoBehaviour
         {
             Debug.Log(rayHit.collider.name);
 
-            // if (rayHit.collider.CompareTag("Enemy"))
-            //rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
-            // print("hit");
+            headDamage = gunDamage.instance.headDamage;
+            bodyDamage = gunDamage.instance.bodyDamage;
+            legDamage = gunDamage.instance.legDamage;
+
+            //print(headDamage + " " + bodyDamage + " " + legDamage);
 
             if (rayHit.collider.CompareTag("enemyHead"))
             {
                 print("h1");
-                damageTaking.instance.enemyHealth -= 50;
+                damageTaking.instance.enemyHealth -= headDamage;
             }
             if (rayHit.collider.CompareTag("enemyBody"))
             {
                 print("h2");
-                damageTaking.instance.enemyHealth -= 10;
+                damageTaking.instance.enemyHealth -= bodyDamage;
+            }
+            if (rayHit.collider.CompareTag("enemyLeg"))
+            {
+                print("h3");
+                damageTaking.instance.enemyHealth -= legDamage;
             }
         }
-       
-        //ShakeCamera
-        //-----camShake.Shake(camShakeDuration, camShakeMagnitude);
+
 
         //Graphics
         Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
@@ -93,22 +106,23 @@ public class gunSystem : MonoBehaviour
 
         bulletsLeft--;
         bulletsShot--;
+        print("bullets " + bulletsShot);
 
-        Invoke("ResetShot", timeBetweenShooting);
+        Invoke("resetShot", timeBetweenShooting);
 
         if (bulletsShot > 0 && bulletsLeft > 0)
-            Invoke("Shoot", timeBetweenShots);
+            Invoke("shoot", timeBetweenShots);
     }
-    private void ResetShot()
+    private void resetShot()
     {
         readyToShoot = true;
     }
-    private void Reload()
+    private void reload()
     {
         reloading = true;
         Invoke("ReloadFinished", reloadTime);
     }
-    private void ReloadFinished()
+    private void reloadFinished()
     {
         bulletsLeft = magazineSize;
         reloading = false;
