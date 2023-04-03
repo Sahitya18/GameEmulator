@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class mouseMovement : MonoBehaviour
 {
+   // [SerializeField]
+    //Camera camera;
+
     //  Variable initialized for mouse sensitivity
     [SerializeField]
     int sensitivity;
@@ -20,12 +23,12 @@ public class mouseMovement : MonoBehaviour
         // To lock the cursor in the center of the screen
         Cursor.lockState = CursorLockMode.Locked;
         //setting initial camera angle to (0,0,0)
-      //------------  transform.localRotation=Quaternion.identity;  //-------------> not workikng
     }
     void Update()
     {
         // Calling mouse movement function 
         mousemover();
+        zoom();
     }
     private void mousemover()
     {
@@ -46,5 +49,21 @@ public class mouseMovement : MonoBehaviour
 
         // Rotating camera according to the mouse movement in y axis
         transform.localEulerAngles = Vector3.right * yRotationVariable;
+    }
+
+    bool zoomed = false;
+    void zoom()
+    {
+        // not working 
+       if(Input.GetKeyDown(KeyCode.Mouse1)&&!zoomed)
+       {
+            Camera.main.fieldOfView = 20;
+            zoomed = true;
+       }
+       else if(Input.GetKeyDown(KeyCode.Mouse1) && zoomed)
+       {
+            Camera.main.fieldOfView = 60;
+            zoomed = false;
+        }
     }
 }

@@ -19,8 +19,8 @@ public class damageTaking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(enemyHealth);
-        if (enemyHealth <= 0)
-            print("dead");
+       // print(enemyHealth);
+        //if (enemyHealth <= 0)
+            //print("dead");
     }
 }

@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class gunSystem : MonoBehaviour
 {
+    public static gunSystem instance;
     //Gun stats
-    int headDamage, bodyDamage, legDamage;
+    public int headDamage, bodyDamage, legDamage;
+    float distanceBetweenPlayerAndEnemy;
     public float timeBetweenShooting, spread, range, reloadTime, timeBetweenShots;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
+    [SerializeField]
+    GameObject enemyBody;
+    [SerializeField]
+    Transform muzzle;
+    //GameObject enemyBody; 
 
     //bools 
     bool shooting, readyToShoot, reloading;
-
+    public bool gunburst = false;
     //Reference
     public Camera fpsCam;
     public Transform attackPoint;
@@ -28,13 +35,14 @@ public class gunSystem : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         bulletsLeft = magazineSize;
         readyToShoot = true;
     }
     private void Update()
     {
         myInput();
-        print(headDamage + " " + bodyDamage + " " + legDamage);
+        //print(headDamage + " " + bodyDamage + " " + legDamage);
 
     }
     private void myInput()
@@ -60,6 +68,8 @@ public class gunSystem : MonoBehaviour
             shoot();
         }
     }
+
+    GameObject currentWeapon;
     private void shoot()
     {
         readyToShoot = false;
@@ -76,25 +86,31 @@ public class gunSystem : MonoBehaviour
         {
             Debug.Log(rayHit.collider.name);
 
-            headDamage = gunDamage.instance.headDamage;
-            bodyDamage = gunDamage.instance.bodyDamage;
-            legDamage = gunDamage.instance.legDamage;
+            currentWeapon = gunScroll.instance.currentGun;
+
+            // enemyBody = enemyspawn.instance.spawnedObject;
+            headDamage = weaponDetails.instance.headDamage;
+            bodyDamage = weaponDetails.instance.bodyDamage;
+            legDamage = weaponDetails.instance.legDamage;
+            distanceBetweenPlayerAndEnemy = Vector3.Distance(muzzle.transform.position, enemyBody.transform.position);
+
+            print("distance "+distanceBetweenPlayerAndEnemy);
 
             //print(headDamage + " " + bodyDamage + " " + legDamage);
 
             if (rayHit.collider.CompareTag("enemyHead"))
             {
-                print("h1");
+               // print("h1");
                 damageTaking.instance.enemyHealth -= headDamage;
             }
             if (rayHit.collider.CompareTag("enemyBody"))
             {
-                print("h2");
+                //print("h2");
                 damageTaking.instance.enemyHealth -= bodyDamage;
             }
             if (rayHit.collider.CompareTag("enemyLeg"))
             {
-                print("h3");
+                //print("h3");
                 damageTaking.instance.enemyHealth -= legDamage;
             }
         }
@@ -106,7 +122,7 @@ public class gunSystem : MonoBehaviour
 
         bulletsLeft--;
         bulletsShot--;
-        print("bullets " + bulletsShot);
+       // print("bullets " + bulletsShot);
 
         Invoke("resetShot", timeBetweenShooting);
 
@@ -120,7 +136,7 @@ public class gunSystem : MonoBehaviour
     private void reload()
     {
         reloading = true;
-        Invoke("ReloadFinished", reloadTime);
+        Invoke("reloadFinished", reloadTime);
     }
     private void reloadFinished()
     {

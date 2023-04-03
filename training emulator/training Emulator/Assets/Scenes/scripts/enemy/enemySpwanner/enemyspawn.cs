@@ -10,6 +10,15 @@ public class enemyspawn : MonoBehaviour
     GameObject[] spawnPositions;
     [SerializeField]
     GameObject enemy;
+
+    public static enemyspawn instance; 
+
+    public GameObject spawnedObject;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         startspawning();
@@ -23,7 +32,7 @@ public class enemyspawn : MonoBehaviour
     public void enemySpawner()
     {
         int randomPosition = Random.Range(0, spawnPositions.Length);
-        Instantiate(enemy, spawnPositions[randomPosition].transform.position, transform.rotation);
+       spawnedObject= Instantiate(enemy, spawnPositions[randomPosition].transform.position, transform.rotation);
 
     }
     IEnumerator enemySpawnDelay()
@@ -34,6 +43,7 @@ public class enemyspawn : MonoBehaviour
         {
             enemySpawner();
             yield return new WaitForSecondsRealtime(3f);
+            Destroy(spawnedObject);
         }
 
     }
