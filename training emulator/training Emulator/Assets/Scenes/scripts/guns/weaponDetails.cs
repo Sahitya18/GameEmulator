@@ -9,8 +9,17 @@ public class weaponDetails : MonoBehaviour
     public static weaponDetails instance;
     public int headDamage, bodyDamage, legDamage,magazineSize;
 
-    GameObject currentWeapon;
+    [SerializeField]
+    GameObject thisObject;//
 
+    GameObject currentWeapon;
+    int bulletsPerTap=0;
+    int burstTap = 0;
+    bool ads = false;
+    bool buttonhold = false;
+    bool rightClickBurst = false;
+    float spread = 0.02f;
+    bool onlyBurstGuns = false;
     private void Awake()
     {
         instance = this;
@@ -27,14 +36,228 @@ public class weaponDetails : MonoBehaviour
         //gunDetails();
     }
 
-    void gunDetails(string name, float distance)
+    // Sending guns basic details initially to the gun system script
+    public void gunDetails(string name)
+    {
+        if (name == "Classic")
+        {
+            onlyBurstGuns = false;
+            spread = 0.02f;
+            ads = false;
+            buttonhold = false;
+            rightClickBurst = true;
+            bulletsPerTap = 1;
+            burstTap = 3;
+            magazineSize = 12;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Shorty")
+        {
+            onlyBurstGuns = true; ;
+            spread = 0.05f;
+            ads = false;
+            buttonhold = false;
+            rightClickBurst = true;
+            bulletsPerTap = 5;
+            burstTap = 0;
+            magazineSize = 2;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Frenzy")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = false;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 13;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Ghost")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = false;
+            buttonhold = false;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 15;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Sheriff")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = false;
+            buttonhold = false;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 6;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+
+        // SMGS ------------------------------------------------------------------------------------------------ 
+
+        if (name == "Stinger")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 30;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Spectre")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 20;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+
+        // SHOTGUNNS ------------------------------------------------------------------------------------------------
+
+        if (name == "Bucky")
+        {
+            onlyBurstGuns = true; ;
+            spread = 0.05f;
+            ads = false;
+            buttonhold = true;
+            rightClickBurst = true;
+            bulletsPerTap = 5;
+            burstTap = 0;
+            magazineSize = 5;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Judge")
+        {
+            onlyBurstGuns = true; ;
+            spread = 0.05f;
+            ads = false;
+            buttonhold = false;
+            rightClickBurst = true;
+            bulletsPerTap = 5;
+            burstTap = 0;
+            magazineSize = 7;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+
+        // RIFLES ------------------------------------------------------------------------------------------------
+
+        if (name == "Vandal")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 25;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Phantom")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 30;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Bulldog")
+        {
+            // ads burst remaining
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 24;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Guardian")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = false;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 12;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+
+        // SNIPER RIFLES ------------------------------------------------------------------------------------------------
+        if (name == "Opertor")
+        {
+            magazineSize = 5;
+
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+            print("marshal" + " " + headDamage + " " + bodyDamage + " " + legDamage);
+        }
+        if (name == "Marshal")
+        {
+            magazineSize = 5;
+
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+            print("marshal" + " " + headDamage + " " + bodyDamage + " " + legDamage);
+        }
+
+        // MACHINE GUNS ------------------------------------------------------------------------------------------------
+        if (name == "Aries")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 50;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+        if (name == "Odin")
+        {
+            onlyBurstGuns = false; ;
+            spread = 0.02f;
+            ads = true;
+            buttonhold = true;
+            rightClickBurst = false;
+            bulletsPerTap = 1;
+            burstTap = 0;
+            magazineSize = 100;
+            thisObject.GetComponent<gunSystem>().gettingDetailofWeapons(magazineSize, bulletsPerTap, buttonhold, spread);
+        }
+    }
+
+
+    // Function overloaded with gun details with respect to the distance between enemy and player
+    public void gunDetails(string name, float distance)
     {
 
         // PISTOLS------------------------------------------------------------------------------------------------
 
-        if (currentWeapon.name == "Classic")
+        if (name == "Classic")
         {
-            magazineSize = 12;
             if(distance<=30)
             {
                 headDamage = 78;
@@ -47,24 +270,17 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 22;
                 legDamage = 18;
             }
-
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("classic "+ distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Shorty")
+        if (name == "Shorty")
         {
-            magazineSize = 2;
             if (distance <= 7)
             {
                 headDamage = 24;
                 bodyDamage = 12;
                 legDamage = 10;
             }
-            else if (distance>=8&& distance<=15)
+            else if (distance >= 8 && distance <= 15)
             {
                 headDamage = 16;
                 bodyDamage = 8;
@@ -76,16 +292,10 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 3;
                 legDamage = 2;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Shorty " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Frenzy")
+        if (name == "Frenzy")
         {
-            magazineSize = 13;
             if (distance <= 20)
             {
                 headDamage = 78;
@@ -98,16 +308,10 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 21;
                 legDamage = 17;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Frenzy " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Ghost")
+        if (name == "Ghost")
         {
-            magazineSize = 15;
             if (distance <= 30)
             {
                 headDamage = 105;
@@ -120,16 +324,10 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 25;
                 legDamage = 21;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Ghost " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Sheriff")
+        if (name == "Sheriff")
         {
-            magazineSize = 6;
             if (distance <= 30)
             {
                 headDamage = 159;
@@ -142,19 +340,14 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 50;
                 legDamage = 42;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Sheriff " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
 
         // SMGS ------------------------------------------------------------------------------------------------ 
 
-        if (currentWeapon.name == "Stinger")
+        if (name == "Stinger")
         {
-            magazineSize = 30;
+
             if (distance <= 15)
             {
                 headDamage = 67;
@@ -167,16 +360,10 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 23;
                 legDamage = 19;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Stinger " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Spectre")
+        if (name == "Spectre")
         {
-            magazineSize = 20;
             if (distance <= 15)
             {
                 headDamage = 78;
@@ -195,19 +382,13 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 20;
                 legDamage = 17;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("Stinger " + distance + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
 
         // SHOTGUNNS ------------------------------------------------------------------------------------------------
 
-        if (currentWeapon.name == "Bucky")
+        if (name == "Bucky")
         {
-            magazineSize = 5;
             if (distance <= 8)
             {
                 headDamage = 40;
@@ -226,15 +407,10 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 9;
                 legDamage = 7;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Judge")
+        if (name == "Judge")
         {
-            magazineSize = 7;
             if (distance <= 10)
             {
                 headDamage = 34;
@@ -253,34 +429,23 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 7;
                 legDamage = 5;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
 
         // RIFLES ------------------------------------------------------------------------------------------------
 
-        if (currentWeapon.name== "Vandal")
+        if (name== "Vandal")
         {
-            magazineSize = 25;
             if (distance <= 50)
             {
                 headDamage = 160;
                 bodyDamage = 40;
                 legDamage = 34;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("vandal"+" " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Phantom")
+        if (name == "Phantom")
         {
-            magazineSize = 30;
             if (distance <= 15)
             {
                 headDamage = 156;
@@ -299,83 +464,58 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 31;
                 legDamage = 26;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Bulldog")
+        if (name == "Bulldog")
         {
-            magazineSize = 24;
+            // ads burst remaining
             if (distance <= 50)
             {
                 headDamage = 115;
                 bodyDamage = 35;
                 legDamage = 29;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("bulldog" + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
+            //print("bulldog" + " " + headDamage + " " + bodyDamage + " " + legDamage);
         }
-        if (currentWeapon.name == "Guardian")
+        if (name == "Guardian")
         {
-            magazineSize = 12;
             if (distance <= 50)
             {
                 headDamage = 195;
                 bodyDamage = 65;
                 legDamage = 48;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
             print("marshal" + " " + headDamage + " " + bodyDamage + " " + legDamage);
         }
 
         // SNIPER RIFLES ------------------------------------------------------------------------------------------------
-        if (currentWeapon.name == "Opertor")
+        if (name == "Opertor")
         {
-            magazineSize = 5;
             if (distance <= 50)
             {
                 headDamage = 255;
                 bodyDamage = 150;
                 legDamage = 120;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
-            print("marshal" + " " + headDamage + " " + bodyDamage + " " + legDamage);
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
-        if (currentWeapon.name == "Marshal")
+        if (name == "Marshal")
         {
-            magazineSize = 5;
             if (distance <= 50)
             {
                 headDamage = 202;
                 bodyDamage = 101;
                 legDamage = 85;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
-
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
             print("marshal" + " " + headDamage + " " + bodyDamage + " " + legDamage);
         }
 
         // MACHINE GUNS ------------------------------------------------------------------------------------------------
-        if (currentWeapon.name == "Aries")
+        if (name == "Aries")
         {
-            magazineSize = 50;
             if (distance <= 30)
             {
                 headDamage = 72;
@@ -388,15 +528,11 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 28;
                 legDamage = 23;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
 
         }
-        if (currentWeapon.name == "Odin")
+        if (name == "Odin")
         {
-            magazineSize = 100;
             if (distance <= 30)
             {
                 headDamage = 95;
@@ -409,10 +545,7 @@ public class weaponDetails : MonoBehaviour
                 bodyDamage = 31;
                 legDamage = 26;
             }
-            gunSystem.instance.headDamage = headDamage;
-            gunSystem.instance.bodyDamage = bodyDamage;
-            gunSystem.instance.legDamage = legDamage;
-            gunSystem.instance.magazineSize = magazineSize;
+            thisObject.GetComponent<gunSystem>().gunDamage(headDamage,bodyDamage,legDamage);
         }
 
 

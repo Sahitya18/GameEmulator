@@ -974,6 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c7362510d75234dae625d63bce0fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 850624234}
   headDamage: 0
   bodyDamage: 0
   legDamage: 0
@@ -983,7 +984,7 @@ MonoBehaviour:
   reloadTime: 1
   timeBetweenShots: 0
   magazineSize: 30
-  bulletsPerTap: 1
+  bulletsPerTap: 5
   allowButtonHold: 0
   enemyBody: {fileID: 552362204}
   muzzle: {fileID: 162841790}
@@ -995,8 +996,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   bulletHoleGraphic: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
-  camShakeMagnitude: 0
-  camShakeDuration: 0
+  camShakeMagnitude: 1
+  camShakeDuration: 1
 --- !u!1 &855007149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c7362510d75234dae625d63bce0fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisObject: {fileID: 0}
   headDamage: 0
   bodyDamage: 0
   legDamage: 0
@@ -1807,6 +1809,7 @@ MonoBehaviour:
   bodyDamage: 0
   legDamage: 0
   magazineSize: 0
+  thisObject: {fileID: 1153518806}
 --- !u!54 &1153518810
 Rigidbody:
   m_ObjectHideFlags: 0

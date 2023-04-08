@@ -52,15 +52,15 @@ public class mouseMovement : MonoBehaviour
     }
 
     bool zoomed = false;
-    void zoom()
+    public void zoom()
     {
         // not working 
-       if(Input.GetKeyDown(KeyCode.Mouse1)&&!zoomed)
+       if(Input.GetKeyDown(KeyCode.Mouse1) && !zoomed && !gunSystem.instance.gunburst)
        {
             Camera.main.fieldOfView = 20;
             zoomed = true;
        }
-       else if(Input.GetKeyDown(KeyCode.Mouse1) && zoomed)
+       else if(Input.GetKeyDown(KeyCode.Mouse1) && zoomed && !gunSystem.instance.gunburst)
        {
             Camera.main.fieldOfView = 60;
             zoomed = false;
