@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class damageTaking : MonoBehaviour
 {
-    public int enemyHealth;
-    public static damageTaking instance;
-    // Start is called before the first frame update
+    public static damageTaking instance; // Variable intialized to access this script from other scripts
+
+    public int enemyHealth; // Health of enemy
+
+    public bool enemyIsAlive; // Living state of enemy
+    
+   
     void Awake()
     {
-        enemyHealth = 100;
+        // Initial default values
+        enemyIsAlive = true;
+        enemyHealth = 150;
     }
     private void Start()
     {
@@ -19,8 +25,26 @@ public class damageTaking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // print(enemyHealth);
-        //if (enemyHealth <= 0)
-            //print("dead");
+        print("enemy healthqq "+enemyHealth);
+    }
+
+    // Getting damage from gunSystem script
+    public void gettingDamage(int damage)
+    {
+        // Enemy health changing according to the weapon damage from the script gun System
+        enemyHealth -= damage;
+        if (enemyHealth <= 0)
+        {
+            enemyIsAlive = false;
+            enemyHealth = 150;
+        }
+    }
+
+    // Only to change the enemyIsAlive to true
+    public void enemyLivingState()
+    {
+        enemyIsAlive = true;
     }
 }
+
+//Remarks: Remove print statements

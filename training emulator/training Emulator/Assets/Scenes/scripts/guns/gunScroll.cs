@@ -60,6 +60,7 @@ public class gunScroll : MonoBehaviour
     public void inHandGun()
     {
         // In hand gun 
-         currentGun = gunPrefabs[currentGunIndex];
+        currentGun = gunPrefabs[currentGunIndex];
     }
 }
+//Remarks: Remove print statements

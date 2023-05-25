@@ -5,11 +5,13 @@ using UnityEngine;
 public class gunSystem : MonoBehaviour
 {
     public static gunSystem instance;
+    [SerializeField]
+    GameObject thisObject;
     //Gun stats
     public int headDamage, bodyDamage, legDamage;
     float distanceBetweenPlayerAndEnemy;
     public float timeBetweenShooting, spread, range, reloadTime, timeBetweenShots;
-    public int magazineSize, bulletsPerTap;
+    public int magazineSize=0, bulletsPerTap;
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
     [SerializeField]
@@ -21,6 +23,8 @@ public class gunSystem : MonoBehaviour
     //bools 
     bool shooting, readyToShoot, reloading;
     public bool gunburst = false;
+
+    bool rightClickBurst = false;
     //Reference
     public Camera fpsCam;
     public Transform attackPoint;
@@ -36,20 +40,34 @@ public class gunSystem : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        bulletsLeft = magazineSize;
+       
         readyToShoot = true;
+
+        weaponDetails wd = new weaponDetails();
     }
     private void Update()
     {
         myInput();
         //print(headDamage + " " + bodyDamage + " " + legDamage);
-
+        //print("mg size " + magazineSize);
     }
     private void myInput()
     {
+        // getting gun name from gunscroll script
+        currentWeapon = gunScroll.instance.currentGun;
+
+        // Sending gun name to the weapon details script to get initial basic data of the gun
+        thisObject.GetComponent<weaponDetails>().gunDetails(currentWeapon.name);
+
+        
+
         if (allowButtonHold)
         {
             shooting = Input.GetKey(KeyCode.Mouse0);
+        }
+        else if(Input.GetKey(KeyCode.Mouse1)&&rightClickBurst)
+        {
+
         }
         else
         {
@@ -89,28 +107,25 @@ public class gunSystem : MonoBehaviour
             currentWeapon = gunScroll.instance.currentGun;
 
             // enemyBody = enemyspawn.instance.spawnedObject;
-            headDamage = weaponDetails.instance.headDamage;
-            bodyDamage = weaponDetails.instance.bodyDamage;
-            legDamage = weaponDetails.instance.legDamage;
             distanceBetweenPlayerAndEnemy = Vector3.Distance(muzzle.transform.position, enemyBody.transform.position);
 
-            print("distance "+distanceBetweenPlayerAndEnemy);
+            // sending gun name and distance to the weaponDetails script to get gun damages according to the distance of the player from enemy
+            thisObject.GetComponent<weaponDetails>().gunDetails(currentWeapon.name, distanceBetweenPlayerAndEnemy);
 
-            //print(headDamage + " " + bodyDamage + " " + legDamage);
 
             if (rayHit.collider.CompareTag("enemyHead"))
             {
-               // print("h1");
+                //print("hh "+headDamage);
                 damageTaking.instance.enemyHealth -= headDamage;
             }
             if (rayHit.collider.CompareTag("enemyBody"))
             {
-                //print("h2");
+                //print("bb " + bodyDamage);
                 damageTaking.instance.enemyHealth -= bodyDamage;
             }
             if (rayHit.collider.CompareTag("enemyLeg"))
             {
-                //print("h3");
+                //print("ll " + legDamage);
                 damageTaking.instance.enemyHealth -= legDamage;
             }
         }
@@ -122,13 +137,46 @@ public class gunSystem : MonoBehaviour
 
         bulletsLeft--;
         bulletsShot--;
-       // print("bullets " + bulletsShot);
+
+        print("magg " + bulletsShot + " " + bulletsLeft);
+
 
         Invoke("resetShot", timeBetweenShooting);
 
         if (bulletsShot > 0 && bulletsLeft > 0)
             Invoke("shoot", timeBetweenShots);
     }
+
+    // getting details from weaponDetails
+    public void gettingDetailofWeapons(int inheritMagazine, int inheritBulletsPerTap, bool inheritButtonHold, float inheritSpread)
+    {
+        magazineSize = inheritMagazine;
+        bulletsPerTap = inheritBulletsPerTap;
+        spread = inheritSpread;
+        allowButtonHold = inheritButtonHold;
+        bulletsLeft = inheritMagazine;
+        //print("m " + magazineSize);
+    }
+
+    public void gunDamage(int inheritHeadDamage, int inheritBodyDamage, int inheritLegDamage)
+    {
+        headDamage = inheritHeadDamage;
+        bodyDamage = inheritBodyDamage;
+        legDamage = inheritLegDamage;
+    }
+
+    //public void gettingDetailofWeapons(int inheritMagazine, int inheritHeadDamage, int inheritBodyDamage, int inheritLegDamage, int inheritBulletsPerTap, bool inheritButtonHold, float inheritSpread)
+    //{
+    //    magazineSize = inheritMagazine;
+    //    bulletsPerTap = inheritBulletsPerTap;
+    //    //headDamage = inheritHeadDamage;
+    //    //bodyDamage = inheritBodyDamage;
+    //    //legDamage = inheritLegDamage;
+    //    spread = inheritSpread;
+    //    allowButtonHold = inheritButtonHold;
+
+    //    print(headDamage + " " + bodyDamage + " " + legDamage + " " + gunburst);
+    //}
     private void resetShot()
     {
         readyToShoot = true;
@@ -144,3 +192,5 @@ public class gunSystem : MonoBehaviour
         reloading = false;
     }
 }
+
+//Remarks: Remove print statements
